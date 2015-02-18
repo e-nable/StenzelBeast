@@ -107,5 +107,5 @@ module thumb_mount(){
 }
 
 test($fn=20);
-color("red")translate([0, 0, 0])rotate([0, 0, 0])translate([-0.0, -0.0, 0]) import("R palm.stl");
+//color("red")translate([0, 0, 0])rotate([0, 0, 0])translate([-0.0, -0.0, 0]) import("R palm.stl");
 
