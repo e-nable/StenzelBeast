@@ -47,8 +47,10 @@ module test(){
 		translate([-35,10.5,-18])rotate([0,90,0])cylinder(d=4,h=66);
 
 		hull(){ //make room for the flesh
-			translate([-7,45,-18])sphere(d=42);
-			translate([1,45,-18])sphere(d=42);
+			translate([-7,45,-17])sphere(d=42);
+			translate([1,45,-17])sphere(d=42);
+			translate([-15,35,-20])sphere(d=30);
+			translate([9,35,-20])sphere(d=30);
 			translate([-3,65,-17])sphere(d=51);
 		}
 		translate([-62,0,-57])cube([130,130,35]);
@@ -105,5 +107,5 @@ module thumb_mount(){
 }
 
 test($fn=20);
-//color("red")translate([0, 0, 0])rotate([0, 0, 0])translate([-0.0, -0.0, 0]) import("/home/nathaniel/Downloads/R palm.stl");
+color("red")translate([0, 0, 0])rotate([0, 0, 0])translate([-0.0, -0.0, 0]) import("R palm.stl");
 
