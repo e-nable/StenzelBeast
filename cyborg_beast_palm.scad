@@ -21,12 +21,15 @@ module thumb_side_wrist_joint(){
 	}
 }
 
-module test(){
-	pinky_side_wrist_joint();
-	thumb_side_wrist_joint();
+module palm(digits=[true,true,true,true,true]){
 	difference(){
 		union(){
-			translate([27.5,57.5,-9])rotate([250,-2,-2])thumb_mount();
+			if (digits[0]){
+				echo("thumb");
+				thumb_side_wrist_joint();
+				translate([27.5,57.5,-9])rotate([250,-2,-2])thumb_mount();
+			}
+			pinky_side_wrist_joint();
 			hull(){
 			translate([-12.2,54,8])cube([21,8,5]);
 				translate([-12.2,54,8])cube([21,8,2]);
@@ -49,10 +52,18 @@ module test(){
 		hull(){ //make room for the flesh
 			translate([-7,45,-17])sphere(d=42);
 			translate([1,45,-17])sphere(d=42);
-			translate([-15,35,-20])sphere(d=30);
-			translate([9,35,-20])sphere(d=30);
+			translate([-13,35,-20])sphere(d=30);
+			translate([7.5,35,-20])sphere(d=30);
 			translate([-3,65,-17])sphere(d=51);
 		}
+		//make room for more thumbs and fingers
+		if(digits[4] == false) translate([-25.7,30,-20])rotate([90,0,0])cylinder(d=15,h=30);
+		if(digits[3] == false) translate([-10,30,-20])rotate([90,0,0])cylinder(d=14,h=30);
+		if(digits[2] == false) translate([5.4,30,-20])rotate([90,0,0])cylinder(d=14,h=30);
+		if(digits[1] == false) translate([21,30,-20])rotate([90,0,0])cylinder(d=15,h=30);
+		if(digits[0] == false) translate([20,59,-20])sphere(d=30);
+
+
 		translate([-62,0,-57])cube([130,130,35]);
 		translate([0,100,-10])sphere(d=74);
 		//translate([-30,10,-10])rotate([35,0,0])cube([60,40,10]);
@@ -82,6 +93,7 @@ module test(){
 		translate([5,20,-5])rotate([27,0,9])cube([2,35,5]);
 		translate([17,20,-10])rotate([32,0,20])cube([2,39,5]);
 	}
+	echo(digits);
 }
 
 module thumb_mount(){
@@ -106,6 +118,6 @@ module thumb_mount(){
 	}
 }
 
-test($fn=20);
+palm(digits=[true,true,true,true,true],$fn=20);
 //color("red")translate([0, 0, 0])rotate([0, 0, 0])translate([-0.0, -0.0, 0]) import("R palm.stl");
 
