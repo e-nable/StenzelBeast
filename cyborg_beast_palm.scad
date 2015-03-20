@@ -15,7 +15,7 @@ module scaled_line(point_a,point_b,diameter,line_scale=[1,1,1]){
     line(scaled_a,scaled_b,diameter);
 }
 
-module pinky_side_wrist_joint(scale){
+module pinky_side_wrist_joint(scale,scale_wrist_screws=true){
     scalex=scale[0];
     scaley=scale[1];
     scalez=scale[2];
@@ -25,11 +25,12 @@ module pinky_side_wrist_joint(scale){
 		translate([-29.5*scalex,20*scaley,-22*scalez])cube([2,20,1]);
 		translate([-30.5*scalex,66*scaley,-17*scalez])rotate([0,90,0])cylinder(d=10*scalex,h=3);
 		}
-		translate([-34*scalex,64.8*scaley,-17.3*scalez])rotate([0,90,0])cylinder(d=5*scalex,h=8);
+		if(scale_wrist_screws==true)translate([-34*scalex,64.8*scaley,-17.3*scalez])rotate([0,90,0])cylinder(d=5*scalex,h=8*scalex);
+                if(scale_wrist_screws==false)translate([-34*scalex,64.8*scaley,-17.3*scalez])rotate([0,90,0])cylinder(d=5,h=8*scalex);
 	}
 }
 
-module thumb_side_wrist_joint(scale){
+module thumb_side_wrist_joint(scale,scale_wrist_screws=true){
     scalex=scale[0];
     scaley=scale[1];
     scalez=scale[2];
@@ -38,11 +39,12 @@ module thumb_side_wrist_joint(scale){
 		translate([22.5*scalex,46*scaley,-22*scalez])cube([2,21*scaley,10*scalez]);
 		translate([22*scalex,66*scaley,-17*scalez])rotate([0,90,0])cylinder(d=10*scalex,h=3);
 		}
-		translate([21*scalex,65*scaley,-17.3*scalez])rotate([0,90,0])cylinder(d=5*scalex,h=8);
+                if(scale_wrist_screws==true)translate([21*scalex,65*scaley,-17.3*scalez])rotate([0,90,0])cylinder(d=5*scalex,h=8);
+                if(scale_wrist_screws==false)translate([21*scalex,65*scaley,-17.3*scalez])rotate([0,90,0])cylinder(d=5,h=8);
 	}
 }
 
-module palm(digits=[true,true,true,true,true],scale=[1,1,1]){
+module palm(digits=[true,true,true,true,true],scale=[1,1,1],scale_screws=true){
     scalex=scale[0];
     scaley=scale[1];
     scalez=scale[2];
@@ -50,10 +52,10 @@ module palm(digits=[true,true,true,true,true],scale=[1,1,1]){
 		union(){
 			if (digits[0]){
 				echo("thumb");
-				thumb_side_wrist_joint(scale);
+				thumb_side_wrist_joint(scale,scale_wrist_screws=scale_screws);
                                 translate([28*scalex,56*scaley,-11*scalez])rotate([230,-2,-2])scale([scalex,scalex,scalex])thumb_mount(scalex);
 			}
-			pinky_side_wrist_joint(scale);
+			pinky_side_wrist_joint(scale,scale_wrist_screws=scale_screws);
 			scale(scale)hull(){
                             translate([-12.2,54,8])cube([21,8,5]);//wire block
                             translate([-12.2,54,8])cube([21,8,2]);
@@ -72,8 +74,10 @@ module palm(digits=[true,true,true,true,true],scale=[1,1,1]){
                     translate([2.4,10,-20])rotate([0,90,0])cylinder(d=16,h=4.8);
                     translate([16.3,10,-20])rotate([0,90,0])cylinder(d=16,h=4.8);
                     //finger knuckle axel hole
-                    translate([-35,10.5,-18])rotate([0,90,0])cylinder(d=4,h=66);
+                    if(scale_screws==true)translate([-35,10.5,-18])rotate([0,90,0])cylinder(d=4,h=66);
                 }
+                //finger knuckle axel hole
+                if(scale_screws==false)scale([scalex,1,1])translate([-35,10.5*scalex,-18*scalex])rotate([0,90,0])cylinder(d=4,h=66);
 		scale(scale)hull(){ //make room for the flesh
 			translate([-7,45,-17])sphere(d=42);
 			translate([1,45,-17])sphere(d=42);
@@ -140,7 +144,7 @@ module palm(digits=[true,true,true,true,true],scale=[1,1,1]){
 }
 
 
-module thumb_mount(scale){
+module thumb_mount(scale,scale_thumb_screws=true){
 	difference(){
 		hull(){
 			translate([-8,-7,-10])cube([1,1,10.5]);
@@ -162,5 +166,5 @@ module thumb_mount(scale){
 	}
 }
 
-palm(digits=[true,true,true,true,true],$fn=detail);//,scale=[0.60,0.80,0.60]);
+palm(digits=[true,true,true,true,true],$fn=detail);//,scale=[1.60,1.80,1.60],scale_screws=false);
 //color("red")translate([0, 0, 0])rotate([0, 0, 0])translate([-0.0, -0.0, 0]) import("R palm.stl");
