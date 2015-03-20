@@ -83,10 +83,22 @@ module palm(digits=[true,true,true,true,true],scale=[1,1,1]){
 		}
 		//make room for more thumbs and fingers
                 scale(scale)union(){
-		if(digits[4] == false) translate([-25.7,30,-20])rotate([90,0,0])cylinder(d=15,h=30);
-		if(digits[3] == false) translate([-10,30,-20])rotate([90,0,0])cylinder(d=14,h=30);
-		if(digits[2] == false) translate([5.4,30,-20])rotate([90,0,0])cylinder(d=14,h=30);
-		if(digits[1] == false) translate([21,30,-20])rotate([90,0,0])cylinder(d=15,h=30);
+		if(digits[4] == false){
+                    translate([-25.7,30,-20])rotate([90,0,0])cylinder(d=15,h=30);
+                    translate([-35.7,22,-21])rotate([0,90,0])cylinder(d=15,h=20);
+                }
+		if(digits[3] == false){
+                    translate([-10,30,-20])rotate([90,0,0])cylinder(d=14,h=30);
+                    translate([-25,22,-21])rotate([0,90,0])cylinder(d=15,h=25);
+                }
+		if(digits[2] == false){
+                    translate([5.4,30,-20])rotate([90,0,0])cylinder(d=14,h=30);
+                    translate([-4.6,22,-21])rotate([0,90,0])cylinder(d=15,h=25);
+                }
+		if(digits[1] == false){
+                    translate([21,30,-20])rotate([90,0,0])cylinder(d=15,h=30);
+                    translate([11,22,-21])rotate([0,90,0])cylinder(d=15,h=25);
+                }
 		if(digits[0] == false) translate([20,59,-20])sphere(d=30);
 		translate([-62,0,-57])cube([130,130,35]);
 		translate([0,100,-10])sphere(d=74);
